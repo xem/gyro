@@ -3,9 +3,9 @@
 <script>
 
 var args = {
-	frequency:30,
+	frequency:10,
 	gravityNormalized:true,
-	decimalCount:1,
+	decimalCount:0,
 };
 
 var gn = new GyroNorm();
@@ -17,24 +17,23 @@ gn.init(args).then(function(){
 
 `Orientation:
 
-alpha = ${data.do.alpha}
-beta = ${data.do.beta}
-gamma = ${data.do.gamma}
-absolute = ${data.do.absolute}
+ alpha = ${data.do.alpha}
+ beta = ${data.do.beta}
+ gamma = ${data.do.gamma}
 
 Motion:
 
-x = ${data.dm.x}
-y = ${data.dm.y}
-z = ${data.dm.z}
+ x = ${data.dm.x}
+ y = ${data.dm.y}
+ z = ${data.dm.z}
 
-gx = ${data.dm.gx}
-gy = ${data.dm.gy}
-gz = ${data.dm.gz}
+ gx = ${data.dm.gx}
+ gy = ${data.dm.gy}
+ gz = ${data.dm.gz}
 
-alpha = ${data.dm.alpha}
-beta = ${data.dm.beta}
-gamma = ${data.dm.gamma}`
+ alpha = ${data.dm.alpha}
+ beta = ${data.dm.beta}
+ gamma = ${data.dm.gamma}`
   
   });
 
