@@ -15,25 +15,25 @@ gn.init(args).then(function(){
   
     t.value = 
 
-`Orientation:
+`[Hold the phone in landscape mode, top side on your right]
 
- alpha = ${data.do.alpha}
- beta = ${data.do.beta}
- gamma = ${data.do.gamma}
+Orientation:
+
+ alpha = ${print(data.do.alpha)} // onload: 90. Turn right for values down to 0, left for values up to 360
+ beta = ${print(data.do.beta)}    // onload: 0. Roll left for values down to -90, right for values up to 90
+ gamma = ${print(data.do.gamma)} // values: 0 = phone on a flat surface. 90 = vertical. -90 to 0 = looking up
 
 Motion:
 
- x = ${data.dm.x}
- y = ${data.dm.y}
- z = ${data.dm.z}
-
- gx = ${data.dm.gx}
- gy = ${data.dm.gy}
- gz = ${data.dm.gz}
-
- alpha = ${data.dm.alpha}
- beta = ${data.dm.beta}
- gamma = ${data.dm.gamma}`
+ x = ${print(data.dm.x)}     // 0 = not moving. value < 0 = back, value > 0 = front
+ y = ${print(data.dm.y)}     // 0 = not moving. value < 0 = right, value > 0 = left
+ z = ${print(data.dm.z)}     // 0 = not moving. value < 0 = down, value > 0 = up
+ gx = ${print(data.dm.gx)}    // 0 = not accelerating. value < 0 = back, value > 0 = front (add +10 if vertical)
+ gy = ${print(data.dm.gy)}    // 0 = not accelerating. value < 0 = right, value > 0 = left
+ gz = ${print(data.dm.gz)}    // 0 = not accelerating. value < 0 = down, value > 0 = up (add -10 if flat)
+ alpha = ${print(data.dm.alpha)} // variation of alpha rotation (0 if immobile)
+ beta = ${print(data.dm.beta)}    // variation of beta rotation (0 if immobile)
+ gamma = ${print(data.dm.gamma)} // variation of gamma rotation (0 if immobile)`
   
   });
 
@@ -42,5 +42,9 @@ Motion:
   t.value += `Unsupported device`;
 
 });
+
+print = function(n){
+  return ("    " + n).slice(-4);
+}
 
 </script>
