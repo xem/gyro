@@ -10,7 +10,7 @@ var args = {
 
 var gn = new GyroNorm();
 
-gn.init().then(function(){
+gn.init(args).then(function(){
   gn.start(function(data){
   
     t.value = 
@@ -28,7 +28,7 @@ x = ${data.dm.x}
 y = ${data.dm.y}
 z = ${data.dm.z}
 
-gx = {data.dm.gx}
+gx = ${data.dm.gx}
 gy = ${data.dm.gy}
 gz = ${data.dm.gz}
 
