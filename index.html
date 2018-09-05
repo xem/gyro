@@ -25,12 +25,6 @@ ondevicemotion = function(e){
   gyro.x = e.acceleration.x;
   gyro.y = e.acceleration.y;
   gyro.z = e.acceleration.z;
-  gyro.gx = e.acceleration.gx;
-  gyro.gy = e.acceleration.gy;
-  gyro.gz = e.acceleration.gz;
-  gyro.malpha = e.acceleration.alpha;
-  gyro.mbeta = e.acceleration.beta;
-  gyro.mgamma = e.acceleration.gamma;
 }
 
 onorientationchange = function() {
@@ -49,7 +43,7 @@ else {
 
 `Orientation:
 
- orientation = ${gyro.orientation} ${gyro.orientation == 0 ? "(portrait)" : gyro.orientation == -90 ? "(landscape right)" : gyro.orientation == 90 ? "(landscape left)" : ""}
+ orientation = ${window.orientation || 0} ${window.orientation == 0 ? "(portrait)" : window.orientation == -90 ? "(landscape right)" : window.orientation == 90 ? "(landscape left)" : ""}
  alpha = ${print(gyro.alpha)} // onload: 90. Turn right for values -> 0, left for values -> 360
  beta = ${print(gyro.beta)}  // onload: 0. Roll left for values -> -90, right for values -> 90
  gamma = ${print(gyro.gamma)} // 90 = -90 = vertical. value -> 0 when looking down, -0 when looking up
@@ -60,12 +54,6 @@ Motion:
  x = ${print(gyro.x)}     // 0 = not moving. value < 0 = back, value > 0 = front
  y = ${print(gyro.y)}     // 0 = not moving. value < 0 = right, value > 0 = left
  z = ${print(gyro.z)}     // 0 = not moving. value < 0 = down, value > 0 = up
- gx = ${print(gyro.gx)}    // 0 = not accelerating. value < 0 = back, value > 0 = front (+10 if vertical)
- gy = ${print(gyro.gy)}    // 0 = not accelerating. value < 0 = right, value > 0 = left
- gz = ${print(gyro.gz)}    // 0 = not accelerating. value < 0 = down, value > 0 = up (-10 if flat)
- alpha = ${print(gyro.malpha)} // variation of alpha rotation (0 if immobile)
- beta = ${print(gyro.mbeta)}  // variation of beta rotation (0 if immobile)
- gamma = ${print(gyro.mgamma)} // variation of gamma rotation (0 if immobile)
 `;
   
 }
