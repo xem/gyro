@@ -15,7 +15,7 @@
 gyro = {};
 ondeviceorientation = function(e){
   gyro.alpha = e.alpha;
-  gyro.gamma = e.beta;
+  gyro.beta = e.beta;
   gyro.gamma = e.gamma;
   gyro.absolute = e.absolute;
   
@@ -29,7 +29,7 @@ ondevicemotion = function(e){
   gyro.x = e.acceleration.x;
   gyro.y = e.acceleration.y;
   gyro.z = e.acceleration.z;
-  gyro.e = JSON.stringify(e);
+  gyro.e = JSON.stringify(e.acceleration);
 }
 
 setInterval(function(){
@@ -66,7 +66,7 @@ Rest
 
 
 print = function(n){
-  return ((n||0).toFixed(0)+"   ").slice(0,4);
+  return (Math.round(n || 0)+"   ").slice(0,4);
 }
 
 /*
