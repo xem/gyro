@@ -1,51 +1,82 @@
 ﻿<textarea id=t cols=120 rows=20></textarea>
-<script src=gyronorm.js></script>
 <script>
+// Gyroscope & accelerometer
 
-var args = {
-	frequency:10,
-	gravityNormalized:true,
-	decimalCount:0,
-};
+// Cross-browser notes:
 
-var gn = new GyroNorm();
+// - Alpha should be 0 on load (but it is not true on all devices).
+// - Beta is between 180 and -180 (90 to -90 on Safari mobile).
+// - Gamma is between 90 and -90 (180 to -180 on Safari mobile).
+// - By default, measures are "relative" (i.e. done along the device's X/Y/Z axis). Chrome < 50 did absolute measures by default.
+// - accelerationIncludingGravity.x / y / z include world's gravity. acceleration.x / y / z don't but are not well implemented on some devices.
+// - World's gravity is measured as a positive or negative number (~10 m/s²) depending on the devices and their orientation.
+// - On some devices, devicemotion event doesn't contain some expected values like acceleration and rotationrate.
 
-gn.init(args).then(function(){
-  gn.start(function(data){
+gyro = {};
+ondeviceorientation = function(e){
+  gyro.alpha = e.alpha;
+  gyro.gamma = e.beta;
+  gyro.gamma = e.gamma;
+  gyro.absolute = e.absolute;
   
-    t.value = 
+}
 
-`[Hold the phone in landscape mode, top side on your right]
+ondevicemotion = function(e){
+  //gyro.x = e.accelerationIncludingGravity.x;
+  //gyro.y = e.accelerationIncludingGravity.y;
+  //gyro.z = e.accelerationIncludingGravity.z;
+  
+  gyro.x = e.acceleration.x;
+  gyro.y = e.acceleration.y;
+  gyro.z = e.acceleration.z;
+  gyro.e = JSON.stringify(e);
+}
 
-Orientation:
+setInterval(function(){
+  
+if(!DeviceMotionEvent || !DeviceOrientationEvent){
+ t.value = `Unsupported device`;
+}
 
- alpha = ${print(data.do.alpha)} // onload: 90. Turn right for values -> 0, left for values -> 360
- beta = ${print(data.do.beta)}  // onload: 0. Roll left for values -> -90, right for values -> 90
- gamma = ${print(data.do.gamma)} // 90 = -90 = vertical. value -> 0 when looking down, -0 when looking up
+else {
+
+  t.value = 
+
+`Orientation:
+
+ alpha = ${print(gyro.alpha)} // onload: 90. Turn right for values -> 0, left for values -> 360
+ beta = ${print(gyro.beta)}  // onload: 0. Roll left for values -> -90, right for values -> 90
+ gamma = ${print(gyro.gamma)} // 90 = -90 = vertical. value -> 0 when looking down, -0 when looking up
+ absolute = ${print(gyro.absolute)} // 90 = -90 = vertical. value -> 0 when looking down, -0 when looking up
 
 Motion:
 
- x = ${print(data.dm.x)}     // 0 = not moving. value < 0 = back, value > 0 = front
- y = ${print(data.dm.y)}     // 0 = not moving. value < 0 = right, value > 0 = left
- z = ${print(data.dm.z)}     // 0 = not moving. value < 0 = down, value > 0 = up
- gx = ${print(data.dm.gx)}    // 0 = not accelerating. value < 0 = back, value > 0 = front (+10 if vertical)
- gy = ${print(data.dm.gy)}    // 0 = not accelerating. value < 0 = right, value > 0 = left
- gz = ${print(data.dm.gz)}    // 0 = not accelerating. value < 0 = down, value > 0 = up (-10 if flat)
- alpha = ${print(data.dm.alpha)} // variation of alpha rotation (0 if immobile)
- beta = ${print(data.dm.beta)}  // variation of beta rotation (0 if immobile)
- gamma = ${print(data.dm.gamma)} // variation of gamma rotation (0 if immobile)`
+ x = ${print(gyro.x)}     // 0 = not moving. value < 0 = back, value > 0 = front
+ y = ${print(gyro.y)}     // 0 = not moving. value < 0 = right, value > 0 = left
+ z = ${print(gyro.z)}     // 0 = not moving. value < 0 = down, value > 0 = up
+
+Rest
   
-  });
+  ${gyro.e}
 
-}).catch(function(e){
+`;
+  
+}
+}, 33);
 
-  t.value = `Unsupported device`;
-
-});
 
 print = function(n){
-  return ("    " + n).slice(-4);
+  return ((n||0).toFixed(0)+"   ").slice(0,4);
 }
+
+/*
+ gx = ${print(gyro.gx)}    // 0 = not accelerating. value < 0 = back, value > 0 = front (+10 if vertical)
+ gy = ${print(gyro.gy)}    // 0 = not accelerating. value < 0 = right, value > 0 = left
+ gz = ${print(gyro.gz)}    // 0 = not accelerating. value < 0 = down, value > 0 = up (-10 if flat)
+ alpha = ${print(gyro.alpha)} // variation of alpha rotation (0 if immobile)
+ beta = ${print(gyro.beta)}  // variation of beta rotation (0 if immobile)
+ gamma = ${print(gyro.gamma)} // variation of gamma rotation (0 if immobile)
+*/
 
 </script>
 <style>
