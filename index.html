@@ -4,7 +4,7 @@
 // Gyroscope
 // =========
 //
-// Measures device rotations around 3 axis
+// Measures device's rotation around 3 axis
 //
 //  Portrait mode:
 //  --------------
@@ -91,19 +91,21 @@
 //
 // In landscape left mode:
 //
-// - x: 0 if immobile. Negative if moving front. Positive if moving back. (along the beta axis)
-// - y: 0 if immobile. Negative if moving right. Positive if moving right. (along the beta axis)
-// - z: 0 if immobile. Negative if moving up. Positive if moving down. (along the beta axis)
+// - x: 0 if immobile. Negative if moving front. Positive if moving back.
+// - y: 0 if immobile. Negative if moving right. Positive if moving right.
+// - z: 0 if immobile. Negative if moving up. Positive if moving down.
 //
 // In landscape right mode:
 //
-// - x: 0 if immobile. Negative if moving back. Positive if moving front. (along the beta axis)
-// - y: 0 if immobile. Negative if moving right. Positive if moving left. (along the beta axis)
-// - z: 0 if immobile. Negative if moving down. Positive if moving up. (along the beta axis)
+// - x: 0 if immobile. Negative if moving back. Positive if moving front.
+// - y: 0 if immobile. Negative if moving right. Positive if moving left.
+// - z: 0 if immobile. Negative if moving down. Positive if moving up.
 //
 
+// Object gathering all the gyro/accelerometer data
 gyro = {};
 
+// gyro event
 ondeviceorientation = function(e){
   gyro.alpha = e.alpha;
   gyro.beta = e.beta;
@@ -111,27 +113,28 @@ ondeviceorientation = function(e){
   gyro.absolute = e.absolute;
 }
 
+// accelero event
 ondevicemotion = function(e){
   gyro.x = e.acceleration.x;
   gyro.y = e.acceleration.y;
   gyro.z = e.acceleration.z;
 }
 
+// change mode
 onorientationchange = function() {
   gyro.orientation = window.orientation;
 }
 
+// Update textarea 30 times per second
 setInterval(function(){
   
 if(!DeviceMotionEvent || !DeviceOrientationEvent){
- t.value = `Unsupported device`;
+  t.value = `Unsupported device`;
 }
 
 else {
 
-t.value = 
-
-`window.orientation = ${window.orientation || 0} `;
+  t.value =  `window.orientation = ${window.orientation || 0} `;
  
 if(window.orientation == 0){
  
