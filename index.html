@@ -1,138 +1,9 @@
-﻿<textarea id=t cols=120 rows=20></textarea>
+﻿<script src=gyro.js></script>
+<textarea id=t cols=120 rows=20></textarea>
 <script>
-
-// Gyroscope
-// =========
-//
-// Measures device's rotation around 3 axis
-//
-//  Portrait mode:
-//  --------------
-// 
-//
-//    Front view                      Top view
-//     _______                    
-//    | _____ |  +---> beta                  
-//    ||     ||  |     axis           
-//    ||     ||  v                 
-//    ||     ||  alpha              ___________
-//    ||     ||  axis              |___________| +----> beta
-//    ||     ||                     \\‾‾‾‾‾‾‾//  |      axis
-//    ||     ||                      \\_____//   v
-//    ||     ||                       \__o__/    gamma
-//    ||_____||                                  axis
-//    |___o___|
-//
-//
-//
-//  Landscape mode (left):
-//  ----------------------
-// 
-//
-//    Front view                           Top view
-//     _______________                    _______________             
-//    | ____________  |  +---> gamma     |_______________| +----> gamma axis
-//    ||            | |  |     axis       \ ========= o /  |      (reversed)
-//    ||            |o|  v                 ‾‾‾‾‾‾‾‾‾‾‾‾‾   v      
-//    ||____________| |  alpha                             beta
-//    |_______________|  axis                              axis
-//
-//
-//
-//  Landscape mode (right):
-//  ----------------------
-// 
-//
-//    Front view                           Top view
-//     _______________                    _______________             
-//    |  ____________ |  +---> gamma     |_______________| +----> gamma
-//    | |            ||  |     axis       \ o ========= /  |      axis
-//    |o|            ||  v                 ‾‾‾‾‾‾‾‾‾‾‾‾‾   v
-//    | |____________||  alpha                             beta
-//    |_______________|  axis                              axis
-//
-//
-//
-// - Alpha should be 0 on load (but it is not reliable on all devices).
-//   Rotate to your left: value increases. Rotate to your right: value decreases.
-//   Value loops between 0 and 360.
-//
-// In landscape mode:
-//
-// - Beta has values between 180 and -180 (90 to -90 on Safari mobile).
-//   Default: 0. Roll to your left: value decreases. Roll to your right: value increases.
-//
-// - Gamma is between 90 and -90 (180 to -180 on Safari mobile).
-//   When the device is held vertically: value = 90 = -90. when it's looking up/down: value reaches ±0.
-//   (Portrait mode: down = 90 to 0. Landscape left: down = -90 to -0. Landscape right: down = 90 to 0.)
-//
-// In portrait mode, beta and gamma are interchanged.
-//
-// - By default, measures are "relative" (i.e. done along the device's X/Y/Z axis).
-//   Chrome < 50 did absolute measures by default, and can still do them using the non-standard event ondeviceorientationabsolute.
-//
-//
-// Accelerometer
-// =============
-//
-// Measures the device's acceleration, but along the world's X/Y/Z axis.
-// (moving the phone "up" in the air will update the up/down acceleration axis, whatever the angle of the phone)
-//
-// - accelerationIncludingGravity.x / y / z include earth's gravity. 
-// - acceleration.x / y / z shouldn't include Earth's gravity (some old devices still do).
-// - Earth's gravity is measured as a positive or negative number (~10 m/s²) depending on the devices and their orientation.
-// - On some devices, the object returned by the ondevicemotion event doesn't contain some expected fields like acceleration.
-//
-// In portrait mode:
-//
-// - x: 0 if immobile. Negative if moving right. Positive if moving left.
-// - y: 0 if immobile. Negative if moving up. Positive if moving down.
-// - z: 0 if immobile. Negative if moving front. Positive if moving back.
-//
-// In landscape left mode:
-//
-// - x: 0 if immobile. Negative if moving front. Positive if moving back.
-// - y: 0 if immobile. Negative if moving right. Positive if moving right.
-// - z: 0 if immobile. Negative if moving up. Positive if moving down.
-//
-// In landscape right mode:
-//
-// - x: 0 if immobile. Negative if moving back. Positive if moving front.
-// - y: 0 if immobile. Negative if moving right. Positive if moving left.
-// - z: 0 if immobile. Negative if moving down. Positive if moving up.
-//
-
-// Object gathering all the gyro/accelerometer data
-gyro = {};
-
-// gyro event
-ondeviceorientation = function(e){
-  gyro.alpha = e.alpha;
-  gyro.beta = e.beta;
-  gyro.gamma = e.gamma;
-  gyro.absolute = e.absolute;
-}
-
-// accelero event
-ondevicemotion = function(e){
-  gyro.x = e.acceleration.x;
-  gyro.y = e.acceleration.y;
-  gyro.z = e.acceleration.z;
-}
-
-// change mode
-onorientationchange = function() {
-  gyro.orientation = window.orientation;
-}
 
 // Update textarea 30 times per second
 setInterval(function(){
-  
-if(!DeviceMotionEvent || !DeviceOrientationEvent){
-  t.value = `Unsupported device`;
-}
-
-else {
 
   t.value =  `window.orientation = ${window.orientation || 0} `;
  
@@ -140,65 +11,24 @@ if(window.orientation == 0){
  
 t.value += 
 
-`// portrait
-
-// orientation
-
-alpha = ${print(gyro.alpha)} // ↔ rotate device
-beta = ${print(gyro.beta)}  // ↕ look up/down
-gamma = ${print(gyro.gamma)} // ⤹ ⤸ roll device
-absolute = ${print(gyro.absolute)}`;
-
-}
-
-else if(window.orientation == 90){
-
-t.value += 
- 
-`// landscape left
-
-// orientation
+`orientation = ${print(gyro.orientation)}
 
 alpha = ${print(gyro.alpha)} // ↔ rotate device
 beta = ${print(gyro.beta)}  // ⤹ ⤸ roll device
-gamma = ${print(gyro.gamma)} // ↕ look up/down
-absolute = ${print(gyro.absolute)}`;
- 
-}
-
-else if(window.orientation == -90){
- 
-t.value +=
-
-`// landscape right
-
-// orientation
-
-alpha = ${print(gyro.alpha)} // ↔ rotate device
-beta = ${print(gyro.beta)}  // ⤹ ⤸ roll device
-gamma = ${print(gyro.gamma)} // ↕ look up/down
-absolute = ${print(gyro.absolute)}`;
- 
-}
-
-t.value += 
-
-`
-
-// motion
+gamma = ${print(gyro.gamma)} // ↕ look up/down 
 
 x = ${print(gyro.x)}     // front-back
 y = ${print(gyro.y)}     // ↔ left-right
-z = ${print(gyro.z)}     // ↕ up-down`;
-  
-}
+z = ${print(gyro.z)}     // ↕ up-down
+`;
+
 }, 33);
 
 
 print = function(n){
-  return (Math.round(n || 0)+"   ").slice(0,4);
+  return ((n || 0).toFixed(1)+"     ").slice(0,6);
 }
 
 </script>
 <style>
-textarea { width: 100%; height: 100%; font-size: 10px}
+textarea { width: 100%; height: 100%; font-size: 10px; }
