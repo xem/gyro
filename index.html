@@ -5,11 +5,13 @@
 // Update textarea 30 times per second
 setInterval(function(){
 
-  t.value =  `orientation = ${print(gyro.orientation)}
+t.value =
 
-alpha = ${print(gyro.alpha)} // ↔ rotate device
-beta = ${print(gyro.beta)}  // ⤹ ⤸ roll device
-gamma = ${print(gyro.gamma)} // ↕ look up/down 
+`orientation = ${gyro.orientation}
+
+alpha = ${print(gyro.alpha)} // ↔ rotate
+beta = ${print(gyro.beta)}  // ↕ look up/down
+gamma = ${print(gyro.gamma)} // ⤹ ⤸ tilt device
 
 x = ${print(gyro.x)}     // front-back
 y = ${print(gyro.y)}     // ↔ left-right

@@ -70,7 +70,7 @@ ondeviceorientation = function(e){
     // - When screen facing up: 0 to 90.
     // - When screen facing down: -0 to -90.
   
-    if(tempbeta < 0){
+    if(tempbeta > 0){
       gyro.beta = -90 - tempbeta;
     }
     
@@ -87,7 +87,7 @@ ondeviceorientation = function(e){
     // - When tilting to your left: 0 to 180.
     // - When tilting to your right: -0 to -180.
     
-    gyro.gamma = -gamma;
+    gyro.gamma = -tempgamma;
   }
   
   // Landscape left mode
@@ -103,7 +103,7 @@ ondeviceorientation = function(e){
     // - When held vertically, value = 0.
     // - When screen facing up: 0 to 90.
     // - When screen facing down: -0 to -90.
-    if(tempgamma < 0){
+    if(tempgamma > 0){
       gyro.beta = -(-90 - tempgamma);
     }
     
@@ -138,11 +138,11 @@ ondeviceorientation = function(e){
     // - When screen facing down: -0 to -90.
     
     if(tempbeta < 0){
-      gyro.beta = -90 - tempgamma;
+      gyro.beta = tempgamma;
     }
     
     else {
-      gyro.beta = 90 - tempgamma;
+      gyro.beta = tempgamma;
     }
     
     // Native *beta* value:
@@ -154,7 +154,7 @@ ondeviceorientation = function(e){
     // - When tilting to your left: 0 to 180.
     // - When tilting to your right: -0 to -180.
     
-    gyro.gamma = -tempbeta;
+    gyro.gamma = tempbeta;
   }
 }
 
