@@ -26,7 +26,7 @@ ondeviceorientation = function(e){
   
   // Just in case it's not set by onorientationchange, set it again.
   if(gyro.orientation === null){
-    gyro.orientation = window.orientation;
+    gyro.orientation = window.orientation || 0;
   }
   
   // Alpha:
