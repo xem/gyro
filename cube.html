@@ -1,0 +1,49 @@
+﻿<script src=gyro.js></script>
+
+<style>
+* { margin: 0; transform-style: preserve-3d; }
+.perspective { perspective: 80vmin; margin: 50vh 50vw; }
+.scene { position: fixed; width: 22vmin; height: 20vmin; transform: translateX(-50%) translateY(-50%) }
+.cube { position: fixed; }
+.cube .face { border: 1px solid #8888; width: 20vmin; height: 20vmin; position: fixed; background: #def8; }
+.cube .face.top { transform: translateZ(20vmin); }
+.cube .face.left { transform: rotateY(90deg) translate(-10vmin) translateZ(-10vmin); }
+.cube .face.right { transform: rotateY(90deg) translate(-10vmin) translateZ(10vmin)); }
+.cube .face.front { transform: rotateX(90deg) translateY(10vmin) translateZ(-10vmin); }
+.cube .face.back { transform: rotateX(90deg) translateY(10vmin) translateZ(10vmin); }
+.cube .face.bottom { }
+</style>
+<div class="perspective">
+  <div class="scene">
+  
+    <div id="alpha">
+      <div id="beta">
+        <div id="gamma">
+  
+          <div class="cube">
+            <p class="face top">
+            <p class="face left">
+            <p class="face right">
+            <p class="face front">
+            <p class="face back">
+            <p class="face bottom">
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// Update textarea 30 times per second
+setInterval(function(){
+
+alpha.style.transform = "rotateY(" + gyro.alpha + "deg)";
+beta.style.transform = "rotateX(" + gyro.beta + "deg)";
+gamma.style.transform = "rotateZ(" + gyro.gamma + "deg)";
+
+}, 33);
+
+</script>
