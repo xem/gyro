@@ -137,12 +137,12 @@ ondeviceorientation = function(e){
     // - When screen facing up: 0 to 90.
     // - When screen facing down: -0 to -90.
     
-    if(tempbeta < 0){
-      gyro.beta = tempgamma;
+    if(tempgamma < 0){
+      gyro.beta = -90 - tempgamma;
     }
     
     else {
-      gyro.beta = tempgamma;
+      gyro.beta = 90 - tempgamma;
     }
     
     // Native *beta* value:
@@ -153,8 +153,8 @@ ondeviceorientation = function(e){
     // New *gamma* value
     // - When tilting to your left: 0 to 180.
     // - When tilting to your right: -0 to -180.
+    gyro.gamma = -tempbeta;
     
-    gyro.gamma = tempbeta;
   }
 }
 
