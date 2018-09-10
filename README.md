@@ -2,8 +2,9 @@ What Gyro.js does:
 ==================
 
 - listens for deviceorientation and devicemotion events<br>
-- converts and adjusts the measured values so they are the same for every orientation (portrait, landscape<br> left, landscape right) and every OS (Android / iOS)<br>
+- converts and adjusts the measured values so they are the same for every orientation (portrait, landscape<br> left, landscape right)<br>
 - updates a `gyro` object with 7 attributes that you can read at any given time:
+- Android only (iOS support coming soon)
 
 orientation:
 ------------
