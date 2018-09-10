@@ -16,9 +16,7 @@
 <div class="perspective">
   <div class="scene">
   
-    <div id="alpha">
-      <div id="beta">
-        <div id="gamma">
+    <div id="angle">
   
           <div class="cube">
             <p class="face top">
@@ -29,8 +27,6 @@
             <p class="face bottom">
           </div>
     
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -40,9 +36,7 @@
 // Update textarea 30 times per second
 setInterval(function(){
 
-alpha.style.transform = "rotateY(" + gyro.alpha + "deg)";
-//beta.style.transform = "rotateX(" + gyro.beta + "deg)";
-//gamma.style.transform = "rotateZ(" + gyro.gamma + "deg)";
+alpha.style.transform = "rotateY(" + gyro.alpha + "deg) rotateX(" + gyro.beta + "deg) rotateZ(" + gyro.gamma + "deg)";
 
 }, 33);
 
