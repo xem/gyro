@@ -97,7 +97,7 @@ ondeviceorientation = function(e){
     // - When screen facing up: 0 to 90.
     // - When screen facing down: -0 to -90.
     if(tempgamma < 0){
-      gyro.beta = 90 - tempgamma;
+      gyro.beta = 90 + tempgamma;
     }
     
     else {
